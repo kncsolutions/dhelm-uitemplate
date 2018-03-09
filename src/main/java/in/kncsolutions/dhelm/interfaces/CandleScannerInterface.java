@@ -17,9 +17,14 @@ package in.kncsolutions.dhelm.interfaces;
 
 import java.util.Map;
 
+import in.kncsolutions.dhelm.uitemplate.UIMemo;
+
 public interface CandleScannerInterface {
 /**
 *
 */
-	void setExchangeSelector();
+	
+	void uiToControl(UIMemo u);
+	void controlOutputUnit();
+	void setExchangeSelector(Map<String, String> e);
 }

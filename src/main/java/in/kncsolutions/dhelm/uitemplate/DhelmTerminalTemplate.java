@@ -176,7 +176,7 @@ public void setCenter(int event_id){
 	    	uiMem.setOutputTab(tbOp);
 	    	uiMem.setAlgoSelector(dcp.getAlgoSelector());
 	    	System.out.println("Successful..");
-	    	runAlgorithmOnChange(t1,dcp);
+	    	runAlgorithmOnChange(t1,dcp,uiMem);
 	      }
 	   });
   }
@@ -199,8 +199,9 @@ public void setCenter(int event_id){
 /**
 *@param algorithm : Specific algorithm selected from drop down combo box as set by TemplateModel class 
 *@param d : The DcenterPanel. Here GUI for input fields to be rendered specific to the algorithm.
+*@param u : The user interface components which are to be updated during run time.
 */
-public abstract void runAlgorithmOnChange(String algorithm,DCenterPanel d);
+public abstract void runAlgorithmOnChange(String algorithm,DCenterPanel d,UIMemo u);
 /**
 *@param uiMem 
 *@param id : id of the button which is to be retrieved. 
@@ -215,6 +216,9 @@ public void setBottomPanel(int i,Tab t, UIMemo uiMem){
 	  else
 		  t.setText("Output Tab "+Integer.toString(i));
 	t.setContent(dop.getView());
+	uiMem.setProgressTextArea(dop.getProgressTextArea());
+	uiMem.setBullishResultTextArea(dop.getBullishPatternTextArea());
+	uiMem.setBearishResultTextArea(dop.getBeraishPatternTextArea());
     super.addToBottomPanel(t);
     t.getTabPane().getSelectionModel().select(t);
 }

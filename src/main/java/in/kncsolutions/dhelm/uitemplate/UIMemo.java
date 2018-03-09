@@ -15,13 +15,14 @@
 */
 package in.kncsolutions.dhelm.uitemplate;
 
-import java.awt.Button;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import in.kncsolutions.dhelm.exceptions.DataException;
 import in.kncsolutions.dhelm.interfaces.UIMemoInterface;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;

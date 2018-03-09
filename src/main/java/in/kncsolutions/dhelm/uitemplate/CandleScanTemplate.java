@@ -24,6 +24,7 @@ import java.util.Map.Entry;
 
 import in.kncsolutions.dhelm.candlescanner.ScanParams;
 import in.kncsolutions.dhelm.exceptions.DataException;
+import in.kncsolutions.dhelm.interfaces.CandleScannerInterface;
 import in.kncsolutions.dhelm.uicomponents.dcontainers.DCandlePatternInput;
 import in.kncsolutions.dhelm.uicomponents.dcontainers.DPopUp;
 import javafx.beans.value.ChangeListener;
@@ -38,7 +39,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public abstract class CandleScanTemplate extends DCandlePatternInput{
+public abstract class CandleScanTemplate extends DCandlePatternInput implements CandleScannerInterface{
 
 private ToggleGroup exchange;
 private List<String> exchangeNames = new ArrayList<String>();
@@ -51,15 +52,17 @@ private boolean uiDisableRequest=false;
 /**
 *  	
 */
-public CandleScanTemplate(ExchangeTemplate exchangeNames) {
+public CandleScanTemplate(ExchangeTemplate exchangeNames,UIMemo uiMemo) {
    super();
    if(exchangeNames.isExchangeTemplateset())
    this.setExchangeSelector(exchangeNames.getExchangeList());
+   this.uiToControl(uiMemo);
 }
 /**
 *
 */
-private void setExchangeSelector(Map<String,String> e){
+@Override
+public void setExchangeSelector(Map<String,String> e){
   super.removeDemoExchanges();
   exchange = new ToggleGroup();
   for (Iterator<Entry<String, String>> iterator = e.entrySet().iterator(); iterator.hasNext();) {
@@ -93,27 +96,26 @@ private void setExchangeSelector(Map<String,String> e){
 /**
 *
 */
-public void uiToDisable(Map<String,Node> u,Tab ip,Tab op)throws DataException{
-  uiList.clear();
-  if(u.isEmpty()){
-    throw new DataException("No nodes are there to be disbled during execution.");
-  }
-  else{
-    uiList.putAll(u);
-  }
-  inputTab=ip;
-  outputTab=op;
-  uiDisableRequest=true;
-}
+public abstract void uiToControl(UIMemo u);
 /**
 *
 */
 public abstract void controlOutputUnit();
 /**
+*
+*/
+public abstract void disableUIcomponents();
+/**
 *@return Returns the selected Exchange identifier for stock exchange apis. 
 */
 public String getSelectedExchange() {
 	return SelectedExchange;
+}
+/**
+*@param b:set true to call method disable disableUIcomponents
+*/
+public void isUItoDisableAtRun(boolean b) {
+	uiDisableRequest=b;
 }
 /**
 * 
@@ -131,13 +133,7 @@ public void setScanButtonControl() {
       toScanList.addAll(setScanList(this.getSelectedExchange()));
       setCandleScanningStatus(true);
       if(this.uiDisableRequest) {
-        if(!uiList.isEmpty())
-        for(Map.Entry<String,Node> m:uiList.entrySet()){ 
-          m.getValue().setDisable(true);
-        }
-       inputTab.setClosable(false);
-       inputTab.getContent().setDisable(true);
-       outputTab.setClosable(false);
+    	  disableUIcomponents();     
      }
      doScan();
    }
