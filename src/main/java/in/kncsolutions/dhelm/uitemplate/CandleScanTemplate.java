@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import in.kncsolutions.dhelm.candlescanner.ScanParams;
-import in.kncsolutions.dhelm.exceptions.DataException;
 import in.kncsolutions.dhelm.interfaces.CandleScannerInterface;
 import in.kncsolutions.dhelm.uicomponents.dcontainers.DCandlePatternInput;
 import in.kncsolutions.dhelm.uicomponents.dcontainers.DPopUp;
@@ -44,9 +43,7 @@ public abstract class CandleScanTemplate extends DCandlePatternInput implements 
 private ToggleGroup exchange;
 private List<String> exchangeNames = new ArrayList<String>();
 private List<RadioButton> exchangeSelectors=new ArrayList<RadioButton>();
-private List<String>toScanList=new ArrayList<String>();
 private Map<String,Node> uiList=new HashMap<String,Node>();
-private Tab inputTab,outputTab;
 private boolean uiDisableRequest=false;
 
 /**
@@ -57,6 +54,7 @@ public CandleScanTemplate(ExchangeTemplate exchangeNames,UIMemo uiMemo) {
    if(exchangeNames.isExchangeTemplateset())
    this.setExchangeSelector(exchangeNames.getExchangeList());
    this.uiToControl(uiMemo);
+   this.controlOutputUnit();
 }
 /**
 *
@@ -130,7 +128,7 @@ public void setScanButtonControl() {
       ScanParams.PrevTrendRefNumber=CandleScanTemplate.super.getTrendReferenceNumber();
       ScanParams.LowerShadowRefPercentage=CandleScanTemplate.super.getLowerShadowPercentage();
       ScanParams.UpperShadowRefPercentage=CandleScanTemplate.super.getUpperShadowPercentage();
-      toScanList.addAll(setScanList(this.getSelectedExchange()));
+      setScanList(this.getSelectedExchange());
       setCandleScanningStatus(true);
       if(this.uiDisableRequest) {
     	  disableUIcomponents();     
@@ -144,7 +142,7 @@ public void setScanButtonControl() {
 /**
 *
 */
-public abstract List<String> setScanList(String exchangeID);
+public abstract void setScanList(String exchangeID);
 /**
 *
 */
