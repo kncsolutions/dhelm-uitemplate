@@ -32,8 +32,8 @@ import javafx.scene.control.TextArea;
 public class UIMemo implements UIMemoInterface {
 public Map<Integer,Node> node=new HashMap<Integer,Node>();
 public Map<Integer,Tab> tabs=new HashMap<Integer,Tab>();
-private Tab inputTab=new Tab();
-private Tab outputTab=new Tab();
+private Tab inputTab;
+private Tab outputTab;
 private ComboBox<?> algoSelector;
 public Map<Integer,TextArea> tArea=new HashMap<Integer,TextArea>();
 private TextArea progressTArea=new TextArea();
@@ -117,8 +117,9 @@ public void setInputTab(Tab t) throws NullPointerException {
 /**
 *@return Returns the input tab.
 */
-public Tab getInputTab() {
-	return inputTab;
+public Tab getInputTab()throws NullPointerException {
+	if(inputTab==null)throw new NullPointerException();
+	  return inputTab;
 }
 /**
 *@param t : The output tab.
@@ -128,7 +129,7 @@ public void setOutputTab(Tab t) throws NullPointerException {
   if(t==null) {
 	  throw new NullPointerException();
   }
-  inputTab=t;	
+  outputTab=t;	
 }
 /**
 *@return Returns the output tab.

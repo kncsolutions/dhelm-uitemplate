@@ -16,7 +16,6 @@
 package in.kncsolutions.dhelm.uitemplate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +27,7 @@ import in.kncsolutions.dhelm.uicomponents.dcontainers.DCandlePatternInput;
 import in.kncsolutions.dhelm.uicomponents.dcontainers.DPopUp;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
@@ -43,7 +40,6 @@ public abstract class CandleScanTemplate extends DCandlePatternInput implements 
 private ToggleGroup exchange;
 private List<String> exchangeNames = new ArrayList<String>();
 private List<RadioButton> exchangeSelectors=new ArrayList<RadioButton>();
-private Map<String,Node> uiList=new HashMap<String,Node>();
 private boolean uiDisableRequest=false;
 
 /**
@@ -53,8 +49,8 @@ public CandleScanTemplate(ExchangeTemplate exchangeNames,UIMemo uiMemo) {
    super();
    if(exchangeNames.isExchangeTemplateset())
    this.setExchangeSelector(exchangeNames.getExchangeList());
-   this.uiToControl(uiMemo);
-   this.controlOutputUnit();
+   //this.uiToControl(uiMemo);
+   //this.controlOutputUnit();
 }
 /**
 *
@@ -82,7 +78,7 @@ public void setExchangeSelector(Map<String,String> e){
 	            if (exchange.getSelectedToggle() != null) {
 	            	  for(int i=0;i<exchangeSelectors.size();i++) {
 	            		if(exchange.getSelectedToggle().equals(exchangeSelectors.get(i))) { 
-	            			SelectedExchange=exchangeNames.get(i);
+	            			SelectedExchange=e.get(exchangeNames.get(i));
 	            			System.out.println(SelectedExchange);
 	            			break;
 	            		}
@@ -128,7 +124,7 @@ public void setScanButtonControl() {
       ScanParams.PrevTrendRefNumber=CandleScanTemplate.super.getTrendReferenceNumber();
       ScanParams.LowerShadowRefPercentage=CandleScanTemplate.super.getLowerShadowPercentage();
       ScanParams.UpperShadowRefPercentage=CandleScanTemplate.super.getUpperShadowPercentage();
-      setScanList(this.getSelectedExchange());
+      setScanList(this.getSelectedExchange());      
       setCandleScanningStatus(true);
       if(this.uiDisableRequest) {
     	  disableUIcomponents();     

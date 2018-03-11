@@ -130,6 +130,7 @@ protected abstract void mainToolbarButtonsActions();
 */
 public void setCenter(int event_id){
   UIMemo uiMem=new UIMemo();
+  ScrollPane sp=new ScrollPane();
   Tab tb=new Tab();
   Tab tbOp=new Tab();
   tbOp.setClosable(false);
@@ -142,7 +143,8 @@ public void setCenter(int event_id){
     tb.setText(tm.getCenterTabTitle(event_id));
   else
 	tb.setText("Tab "+Integer.toString(event_id));
-  tb.setContent((new ScrollPane(dcp.getDCenterPanel())));
+  sp.setContent(dcp.getDCenterPanel());
+  tb.setContent(sp);
   super.addToCenterPanel(tb);
   tb.getTabPane().getSelectionModel().select(tb);
   if(!tm.getContentAlgoListStatus()) {
@@ -170,8 +172,7 @@ public void setCenter(int event_id){
 	      if(t1.equals(algoList.get(0))){
 	        dcp.cleanParamPane();
 	       }
-	      else {
-	    	dcp.cleanParamPane();
+	      else {	    	
 	    	uiMem.setInputTab(tb);
 	    	uiMem.setOutputTab(tbOp);
 	    	uiMem.setAlgoSelector(dcp.getAlgoSelector());
@@ -217,8 +218,11 @@ public void setBottomPanel(int i,Tab t, UIMemo uiMem){
 		  t.setText("Output Tab "+Integer.toString(i));
 	t.setContent(dop.getView());
 	uiMem.setProgressTextArea(dop.getProgressTextArea());
+	uiMem.setCancelScanButton(dop.getProgressCancelButton());
 	uiMem.setBullishResultTextArea(dop.getBullishPatternTextArea());
+	uiMem.setSaveBullishButton(dop.getBullishPatternSaveButton());
 	uiMem.setBearishResultTextArea(dop.getBeraishPatternTextArea());
+	uiMem.setSaveBearishButton(dop.getBearishPatternSaveButton());
     super.addToBottomPanel(t);
     t.getTabPane().getSelectionModel().select(t);
 }
