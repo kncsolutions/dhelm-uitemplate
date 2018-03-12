@@ -63,6 +63,7 @@ public DhelmTerminalTemplate(TemplateModel t) {
 	super();
 	tm=t;
 	setMainToolBar(tm.getContentMainToolbarButtons());
+	setRightContainer();
 	mainStage=new Stage();
 	visualBounds = Screen.getPrimary().getVisualBounds();
 
@@ -120,6 +121,12 @@ protected void setMainToolBar(Map<Integer,String> buttonList){
 		mainToolbarButtonsActions();
 	}
  
+}
+/**
+ * 
+ */
+private void setRightContainer() {
+	super.setRight();
 }
 /**
 *The method to be implemented for tool bar button actions.  
